@@ -24,7 +24,7 @@ public class Client {
                 System.out.println("Write a message");
                 String message = sc.nextLine();
 
-                if(message.equals("exit")) {
+                if(message.equalsIgnoreCase("exit")) {
                     outputClient.println("disconnected");
                     break;
                 }

@@ -28,8 +28,18 @@ public class Server {
                 String incomingMessage = incomingServer.readLine();
                 outgoingServer.println("Message " + incomingMessage + " received!");
 
-                if (incomingMessage.equals("exit")) {
-                    break;
+                if (incomingMessage.equalsIgnoreCase("disconnected")) {
+                    connections--;
+                    if(connections == 0) {
+                        System.out.println("no connections opened - closing in 2 seconds");
+                        try {
+                            Thread.sleep(2000);
+                        }catch (InterruptedException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    }
+
                 }
             }
 
