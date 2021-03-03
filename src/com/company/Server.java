@@ -13,16 +13,26 @@ public class Server {
     public static void main(String[] args) {
 
         try (ServerSocket incoming = new ServerSocket(7777) ) {
+            int connections = 0;
             System.out.println("Waiting for connection...");
             Socket client = incoming.accept();
-            System.out.println("Client connected");
+            connections++;
 
             BufferedReader incomingServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintWriter outgoingServer = new PrintWriter(client.getOutputStream(),true);
 
             String date = (new Date()).toString();
-            outgoingServer.println(date);
-            System.out.println("Server sent " + date);
+            System.out.println("Client " + incomingServer.readLine() + " connected on " + date);
+
+            while (true) {
+                String incomingMessage = incomingServer.readLine();
+                outgoingServer.println("Message " + incomingMessage + " received!");
+
+                if (incomingMessage.equals("exit")) {
+                    break;
+                }
+            }
+
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
